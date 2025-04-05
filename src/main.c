@@ -4,7 +4,6 @@
 #include "./maps/maps.h"
 #include <stdio.h>
 
-
 typedef struct AppContext
 {
 	int		windowHeight;
@@ -70,7 +69,6 @@ Rectangle texture_config(t_map map, size_t actual_x, size_t actual_y)
 void draw_map(t_map *map, Texture2D *textures, AppContext ctx)
 {
 	Rectangle rec = texture_config(*map, 0, 0);
-	Vector2 vec = {0, 0};
 
 	for (size_t i = 0 ; map->map[i] ; i++)
 	{
