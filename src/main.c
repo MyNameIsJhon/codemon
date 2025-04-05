@@ -12,7 +12,6 @@ AppContext	*CreateAppContext()
 	strcat(ctx->windowName, "Codemon");
 	ctx->windowWidth	= 900;
 	ctx->windowHeight	= 600;
-	ctx->player = CreatePlayer(ctx);
 	return (ctx);
 }
 
@@ -21,6 +20,7 @@ void	InitApp(AppContext *ctx)
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(ctx->windowWidth, ctx->windowHeight, ctx->windowName);
 	HRAL_DeclareLibrary(&ctx->hrContext, "./src/modules/graphics/libgraphics.dylib", " cd ./src/modules/graphics/ && clang -I./src/extern/raylib-5.5/src/ -undefined dynamic_lookup *.c -dynamiclib -o libgraphics.dylib ");
+	ctx->player = CreatePlayer(ctx);
 }
 
 int main(void)
