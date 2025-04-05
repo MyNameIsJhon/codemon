@@ -20,3 +20,10 @@ void	DrawMap(AppContext *ctx)
 {
 	ClearBackground(WHITE);
 }
+
+void DrawGame(AppContext *ctx)
+{
+	BeginDrawing();
+	DrawMap(ctx);
+	EndDrawing();
+}
