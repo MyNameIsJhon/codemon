@@ -2,7 +2,7 @@
 #define CODEMON_H
 #include "chore/chore.h"
 #include "extern/raylib-5.5/src/raylib.h"
-#define FPS 24
+#define PLAYER_SPEED 5
 #define PLAYER_SPRITE_LENGTH 24
 
 typedef enum Direction

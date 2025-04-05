@@ -10,7 +10,7 @@ void	DrawPlayer(AppContext *ctx)
 	if (!player->isMoving)
 		src = player->frames[player->dir];
 	else
-		src = player->frames[((((int)(GetTime() * FPS) % 4)) * 4) + (player->dir)];
+		src = player->frames[((((int)(GetTime() * PLAYER_SPEED) % 4)) * 4) + (player->dir)];
 	DrawTexturePro(
 		player->texture,
 		src,
@@ -60,7 +60,7 @@ void DrawGame(AppContext *ctx)
 {
 	BeginDrawing();
 	DrawMap(ctx);
-	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Coucou les musulmans\n moi je mange la glace\net toi tu manges rien", LIGHTGRAY, BLACK);
+	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Yo le sang", LIGHTGRAY, BLACK);
 	DrawPlayer(ctx);
 	EndDrawing();
 }
