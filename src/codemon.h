@@ -23,6 +23,7 @@ typedef struct Player
 	bool isMoving;
 	Direction dir;
 	Texture2D texture;
+	Rectangle frames[16];
 }	Player;
 
 typedef struct AppContext
@@ -31,11 +32,12 @@ typedef struct AppContext
 	int				windowWidth;
 	char			windowName[256];
 	HRAL_Context	hrContext;
+	Player			*player;
 } AppContext;
 
 Player	*CreatePlayer(AppContext *ctx);
-void	DrawPlayer(Player *player);
-void	UpdatePlayer(Player *player);
+void	DrawPlayer(AppContext *ctx);
+void	UpdatePlayer(AppContext *ctx);
 
 
 #endif // !CODEMON_H

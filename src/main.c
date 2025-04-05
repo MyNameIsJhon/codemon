@@ -12,6 +12,7 @@ AppContext	*CreateAppContext()
 	strcat(ctx->windowName, "Codemon");
 	ctx->windowWidth	= 900;
 	ctx->windowHeight	= 600;
+	ctx->player = CreatePlayer(ctx);
 	return (ctx);
 }
 
@@ -28,25 +29,23 @@ int main(void)
 	InitApp(ctx);
 	SetTargetFPS(10);
 
-	Player *player = CreatePlayer(ctx);
-
 	while (!WindowShouldClose())
 	{
 		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT))
 		{
-			player->isMoving = true;
+			ctx->player->isMoving = true;
 			if (IsKeyPressed(KEY_UP))
-				player->dir = UP;
+				ctx->player->dir = UP;
 			else if (IsKeyPressed(KEY_DOWN))
-				player->dir = DOWN;
+				ctx->player->dir = DOWN;
 			else if (IsKeyPressed(KEY_RIGHT))
-				player->dir = RIGHT;
+				ctx->player->dir = RIGHT;
 			else if (IsKeyPressed(KEY_LEFT))
-				player->dir = LEFT;
+				ctx->player->dir = LEFT;
 		}
 		else
-			player->isMoving = false;
-		UpdatePlayer(player);
+			ctx->player->isMoving = false;
+		UpdatePlayer(ctx);
 		HRAL_CheckForReload(&ctx->hrContext);
 		void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
 		void (*DrawDialogBox)(AppContext*, Rectangle, const char *,  Color, Color) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawDialogBox");
@@ -54,7 +53,7 @@ int main(void)
 		BeginDrawing();
 		DrawMap(ctx);
 		DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Arthur le nul!", YELLOW, BLACK);
-		DrawPlayer(player);
+		DrawPlayer(ctx);
 		EndDrawing();
 	}
 	CloseWindow();
