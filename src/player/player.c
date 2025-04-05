@@ -14,39 +14,6 @@ Player	*CreatePlayer(AppContext *ctx)
 	return (player);
 }
 
-static Rectangle	GetStillSprite(Direction dir)
-{
-	switch (dir)
-	{
-		case UP:
-			return (Rectangle){ 16, 16, 16, 16 };
-		case DOWN:
-			return (Rectangle){ 16, 0, 16, 16 };
-		case RIGHT:
-			return (Rectangle){ 0, 16, 16, 16 };
-		case LEFT:
-			return (Rectangle){ 0, 0, 16, 16 };
-	}
-}
-
-void	DrawPlayer(AppContext *ctx)
-{
-	Player *player = ctx->player;
-	Rectangle dest = (Rectangle){ player->position.x, player->position.y, 35, 35 };
-	Rectangle src;
-	if (!player->isMoving)
-		src = GetStillSprite(player->dir);
-	else
-		src = player->frames[((((int)(GetTime() * FPS) % 4)) * 4) + (player->dir)];
-	DrawTexturePro(
-		player->texture,
-		src,
-		dest,
-		(Vector2){ 0, 0 },
-		0,
-		WHITE
-	);
-}
 
 void	UpdatePlayer(AppContext *ctx)
 {
