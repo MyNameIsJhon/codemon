@@ -4,17 +4,36 @@
 
 
 
-void	DrawDialogBox(AppContext *ctx, Rectangle rec, const char* text, Color bgColor, Color textColor)
-{
-	DrawRectangleRec(rec, bgColor);
-	int textWidth = MeasureText(text, 10);
-	int textHeight = 10;
 
-	int textX	= (rec.width - textWidth)/2;
-	int textY	= (rec.height - textHeight)/2;
-	DrawText(text, textX, textY, 20, textColor);
+void DrawDialogBox(AppContext *ctx, Rectangle rec, const char* text, Color bgColor, Color textColor)
+{
+	static int letterCount = 0;
+	static double timeElapsed = 0.0;
+	const double letterInterval = 0.06;
+
+	timeElapsed += GetFrameTime();
+	if (timeElapsed >= letterInterval)
+	{
+		if (letterCount < (int)strlen(text)) letterCount++;
+		timeElapsed = 0.0;
+	}
+
+	DrawRectangleRec(rec, bgColor);
+
+	int textWidth = MeasureText(text, 20);
+	int textHeight = 20;
+
+	int textX = rec.x + (rec.width - textWidth) / 2;
+	int textY = rec.y + (rec.height - textHeight) / 2;
+	DrawText(TextSubtext(text, 0, letterCount), textX, textY, 20, textColor);
 	DrawRectangleLinesEx(rec, 3, BLACK);
+	if (letterCount >= (int)strlen(text)) 
+	{
+		letterCount = 0;
+		timeElapsed = 0.0;
+	}
 }
+
 
 void	DrawMap(AppContext *ctx)
 {
@@ -25,5 +44,6 @@ void DrawGame(AppContext *ctx)
 {
 	BeginDrawing();
 	DrawMap(ctx);
+	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Coucou les musulmans\n moi je mange la glace\net toi tu manges rien", WHITE, BLACK);
 	EndDrawing();
 }
