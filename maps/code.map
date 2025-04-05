@@ -1,4 +1,4 @@
-#START
+#START-8
 %MOBILIER
 o = tile_0338.png
 b = tile_0327.png
@@ -12,7 +12,7 @@ h = tile_0053.png
 a = tile_0302.png
 %SOL ET MURE:
 0 = tile_0109.png
-1 = 
+1 = tile_0109.png
 #END
 1111111111111
 1o00000000001

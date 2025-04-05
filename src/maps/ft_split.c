@@ -89,3 +89,15 @@ char	**ft_split(char *str, char *charset)
 	strs[i] = NULL;
 	return (strs);
 }
+
+void ft_free_strsplit(char **split)
+{
+    int i = 0;
+
+    while (split[i] != NULL)
+    {
+        free(split[i]);
+        i++;
+    }
+    free(split);
+}

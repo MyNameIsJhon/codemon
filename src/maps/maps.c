@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 size_t map_size(FILE *file)
 {
@@ -42,6 +43,7 @@ char *get_map(char *path)
 	if (!(str = (char *)malloc(len + 1)))
 		return (NULL);	
 	read_map(file, str);
+	fclose(file);
 	return str;
 }
 
@@ -77,20 +79,37 @@ void stripe_parser(char *st_map, t_map *map)
 		y++;
 	}
 	map->stripe[y] = NULL;
+	ft_free_strsplit(splited);
 }
 
-char **load_map(char **content)
+void load_map(t_map *map)
 {
 	size_t i = 0;
-
-	while (strcmp(content[i], "#END"))
-		i++;
+	size_t y = 0;
+	char **splited = ft_split(map->content, "\n");
 	
+	while (!isdigit(splited[i][y]))
+		y++;
+	map->height = atoi((splited[i] + y));
+	while (strcmp(splited[i], "#END"))
+		i++;
+	i++;
+	y = 0;
+	if (!(map->map = (char **) malloc(sizeof(char *) * (map->height + 1))))	
+		return ;
+	while (splited[i])
+		map->map[y++] = strdup(splited[i++]);
+	ft_free_strsplit(splited);
 }
 
-void init_map(t_map *map, char *path)
+void init_map(t_map **imap, char *path)
 {
+	t_map *map;
+
+	if (!(map = (t_map *) malloc(sizeof(t_map))))
+		return ;
+	*imap = map;
 	map->content = get_map(path);
 	stripe_parser(map->content, map);
-
+	load_map(map); 
 }
