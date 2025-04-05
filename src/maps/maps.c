@@ -71,12 +71,11 @@ void stripe_parser(char *st_map, t_map *map)
 		i++;
 	if(!(map->stripe = (char ***)malloc(sizeof(char **) * (map_striplen(splited) + 1))))
 		return ;
-	while (strcmp(splited[i], "#END"))
+	while (strcmp(splited[i], "#END") != 0)
 	{
-		if(!(splited[i][0] == '#' && splited[i][0] == '%'))
-			map->stripe[y] = ft_split(splited[i], " =");
+		if(splited[i][0] != '#' && splited[i][0] != '%')
+			map->stripe[y++] = ft_split(splited[i], " =");
 		i++;
-		y++;
 	}
 	map->stripe[y] = NULL;
 	ft_free_strsplit(splited);
@@ -112,4 +111,15 @@ void init_map(t_map **imap, char *path)
 	map->content = get_map(path);
 	stripe_parser(map->content, map);
 	load_map(map); 
+}
+
+void print_param(t_map *map)
+{
+	printf("INFOS: Image et texture dedies\n\n");
+	for (int i = 0; map->stripe[i]; i++ )
+		printf("%s = %s\n", map->stripe[i][0] ,map->stripe[i][1]);
+	printf("\n\nINFOS: Map format ascii\n\n");
+	for (int i = 0; map->map[i]; i++ )
+		printf("%s = %s\n", map->map[i] ,map->map[i]);
+	printf("\n\nINFOS: Map format ascii\n\n");
 }
