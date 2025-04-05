@@ -10,11 +10,11 @@ Player	*CreatePlayer(AppContext *ctx)
 	player->isMoving = false;
 	player->texture = LoadTexture("./sprites/player_sprite.png");
 	for (int i = 0; i < 16; i ++)
-		player->frames[i] = (Rectangle){ 16 * ((i % 4)), i / 4, 16, 16 };
+		player->frames[i] = (Rectangle){ 16 * ((i % 4)), (i / 4) * 16, 16, 16 };
 	return (player);
 }
 
-static Rectangle	GetSpriteRectanlge(Direction dir)
+static Rectangle	GetStillSprite(Direction dir)
 {
 	switch (dir)
 	{
@@ -33,7 +33,11 @@ void	DrawPlayer(AppContext *ctx)
 {
 	Player *player = ctx->player;
 	Rectangle dest = (Rectangle){ player->position.x, player->position.y, 35, 35 };
-	Rectangle src = GetSpriteRectanlge(player->dir);
+	Rectangle src;
+	if (!player->isMoving)
+		src = GetStillSprite(player->dir);
+	else
+		src = player->frames[((((int)(GetTime() * FPS) % 4)) * 4) + (player->dir)];
 	DrawTexturePro(
 		player->texture,
 		src,
