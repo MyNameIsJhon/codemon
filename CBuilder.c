@@ -1353,10 +1353,7 @@ void CleanRule(int argc, char **argv)
 
 void BuildModules(int ac, char **av)
 {
-	if (!FileExists(GRAPHICS_BIN) || HasArg(ac,av, "-force"))
-		ExecuteCommand(CreateCommand(BUILD_GRAPHICS_CMD));
-	else
-		LOG_INFO(COLOR_GREEN GRAPHICS_BIN " already exists!"COLOR_RESET);
+	ExecuteCommand(CreateCommand(BUILD_GRAPHICS_CMD));
 }
 
 
