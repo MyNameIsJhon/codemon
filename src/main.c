@@ -27,15 +27,34 @@ int main(void)
 	AppContext *ctx = CreateAppContext();
 	InitApp(ctx);
 	SetTargetFPS(10);
+
+	Player *player = CreatePlayer(ctx);
+
 	while (!WindowShouldClose())
 	{
+		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT))
+		{
+			player->isMoving = true;
+			if (IsKeyPressed(KEY_UP))
+				player->dir = UP;
+			else if (IsKeyPressed(KEY_DOWN))
+				player->dir = DOWN;
+			else if (IsKeyPressed(KEY_RIGHT))
+				player->dir = RIGHT;
+			else if (IsKeyPressed(KEY_LEFT))
+				player->dir = LEFT;
+		}
+		else
+			player->isMoving = false;
+		UpdatePlayer(player);
 		HRAL_CheckForReload(&ctx->hrContext);
 		void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
 		void (*DrawDialogBox)(AppContext*, Rectangle, const char *,  Color, Color) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawDialogBox");
 
 		BeginDrawing();
-			DrawMap(ctx);
-			DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Arthur le nul!", YELLOW, BLACK);
+		DrawMap(ctx);
+		DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Arthur le nul!", YELLOW, BLACK);
+		DrawPlayer(player);
 		EndDrawing();
 	}
 	CloseWindow();
