@@ -11,4 +11,7 @@ typedef struct	s_map {
 	char **map;
 }				t_map;
 
+char *get_map(char *path);
+char	**ft_split(char *str, char *charset);
+
 #endif
