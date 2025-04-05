@@ -26,9 +26,14 @@ int main(void)
 {
 	AppContext *ctx = CreateAppContext();
 	InitApp(ctx);
-	SetTargetFPS(10);
+	SetTargetFPS(100);
 
 	Player *player = CreatePlayer(ctx);
+	double lastReloadTime = 0;
+	double reloadTimeInterval = 1;
+	void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
+	void (*DrawDialogBox)(AppContext*, Rectangle, const char *,  Color, Color) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawDialogBox");
+
 
 	while (!WindowShouldClose())
 	{
@@ -47,15 +52,20 @@ int main(void)
 		else
 			player->isMoving = false;
 		UpdatePlayer(player);
-		HRAL_CheckForReload(&ctx->hrContext);
-		void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
-		void (*DrawDialogBox)(AppContext*, Rectangle, const char *,  Color, Color) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawDialogBox");
-
 		BeginDrawing();
-		DrawMap(ctx);
-		DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Arthur le nul!", YELLOW, BLACK);
-		DrawPlayer(player);
+			DrawMap(ctx);
+			DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Arthur le nul!", YELLOW, BLACK);
+			DrawPlayer(player);
 		EndDrawing();
+
+		double currentTime = GetTime();
+		if (currentTime - lastReloadTime > reloadTimeInterval)
+		{
+			HRAL_CheckForReload(&ctx->hrContext);
+			void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
+			void (*DrawDialogBox)(AppContext*, Rectangle, const char *,  Color, Color) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawDialogBox");
+			lastReloadTime = currentTime;
+		}
 	}
 	CloseWindow();
 
