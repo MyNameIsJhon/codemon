@@ -59,17 +59,38 @@ size_t map_striplen(char **splited)
 	return (y);
 }
 
-void map_parser(char *st_map, t_map *map)
+void stripe_parser(char *st_map, t_map *map)
 {
 	char **splited = ft_split(st_map, "\n");
 	size_t i = 0;
+	size_t y = 0;
 	
-	while (splited[i][0] != '%' && splited[i][0] == '#')
+	while (splited[i][0] == '%' || splited[i][0] == '#')
 		i++;
-	if(!(map->stripe = (char **)malloc(sizeof(char *) * (map_striplen(splited) + 1))))
+	if(!(map->stripe = (char ***)malloc(sizeof(char **) * (map_striplen(splited) + 1))))
 		return ;
 	while (strcmp(splited[i], "#END"))
 	{
-		
+		if(!(splited[i][0] == '#' && splited[i][0] == '%'))
+			map->stripe[y] = ft_split(splited[i], " =");
+		i++;
+		y++;
 	}
+	map->stripe[y] = NULL;
+}
+
+char **load_map(char **content)
+{
+	size_t i = 0;
+
+	while (strcmp(content[i], "#END"))
+		i++;
+	
+}
+
+void init_map(t_map *map, char *path)
+{
+	map->content = get_map(path);
+	stripe_parser(map->content, map);
+
 }
