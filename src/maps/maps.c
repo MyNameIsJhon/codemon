@@ -110,6 +110,7 @@ void init_map(t_map **imap, char *path)
 	*imap = map;
 	map->content = get_map(path);
 	stripe_parser(map->content, map);
+	map->width = strlen(map->map[0]);
 	load_map(map); 
 }
 
