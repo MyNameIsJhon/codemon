@@ -1,0 +1,24 @@
+#START-8
+%MOBILIER
+o = tile_0338.png
+b = tile_0327.png
+n = tile_0363.png
+e = tile_0353.png
+p = tile_0279.png
+%PNJ:
+f = tile_0105.png
+h = tile_0053.png
+%VERDURE:
+a = tile_0302.png
+%SOL ET MURE:
+0 = tile_0109.png
+1 = tile_0109.png
+#END
+1111111111111
+1o00000000001
+1000b0000p001
+1f00000000001
+1n0000h000001
+1000000000e01
+1a00000110001
+1111111111111
