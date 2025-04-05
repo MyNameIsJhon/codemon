@@ -1,5 +1,4 @@
-#include "../../codemon.h"
-#include "../../extern//raylib-5.5/src/raylib.h"
+#include "graphics.h"
 
 
 void	DrawPlayer(AppContext *ctx)
@@ -60,7 +59,8 @@ void DrawGame(AppContext *ctx)
 {
 	BeginDrawing();
 	DrawMap(ctx);
-	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Yo le sang", LIGHTGRAY, BLACK);
+	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Codemon\nProduit par :\n- Pierre\n- Lala\n- Po", LIGHTGRAY, BLACK);
 	DrawPlayer(ctx);
+	DrawConsole(ctx);
 	EndDrawing();
 }
