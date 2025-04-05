@@ -26,7 +26,7 @@ void DrawDialogBox(AppContext *ctx, Rectangle rec, const char* text, Color bgCol
 	int textX = rec.x + (rec.width - textWidth) / 2;
 	int textY = rec.y + (rec.height - textHeight) / 2;
 	DrawText(TextSubtext(text, 0, letterCount), textX, textY, 20, textColor);
-	DrawRectangleLinesEx(rec, 3, BLACK);
+	DrawRectangleRoundedLinesEx(rec, 0.05, 1, 3, BLACK);
 	if (letterCount >= (int)strlen(text)) 
 	{
 		letterCount = 0;
@@ -44,6 +44,6 @@ void DrawGame(AppContext *ctx)
 {
 	BeginDrawing();
 	DrawMap(ctx);
-	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Coucou les musulmans\n moi je mange la glace\net toi tu manges rien", WHITE, BLACK);
+	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Coucou les musulmans\n moi je mange la glace\net toi tu manges rien", LIGHTGRAY, BLACK);
 	EndDrawing();
 }
