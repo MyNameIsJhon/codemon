@@ -102,26 +102,15 @@ void load_map(t_map *map)
 	ft_free_strsplit(splited);
 }
 
-void init_map(t_map **imap, char *path)
+t_map *init_map(char *path)
 {
 	t_map *map;
 
 	if (!(map = (t_map *) malloc(sizeof(t_map))))
-		return ;
-	*imap = map;
+		return (NULL);
 	map->content = get_map(path);
 	stripe_parser(map->content, map);
 	load_map(map); 
 	map->width = strlen(map->map[0]); 
-}
-
-void print_param(t_map *map)
-{
-	printf("INFOS: Image et texture dedies\n\n");
-	for (int i = 0; map->stripe[i]; i++ )
-		printf("%s = %s\n", map->stripe[i][0] ,map->stripe[i][1]);
-	printf("\n\nINFOS: Map format ascii\n\n");
-	for (int i = 0; map->map[i]; i++ )
-		printf("%s = %s\n", map->map[i] , map->map[i]);
-	printf("\n\nINFOS: Map format ascii\n\n");
+	return (map);
 }

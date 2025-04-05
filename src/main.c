@@ -66,7 +66,7 @@ Rectangle texture_config(t_map map, size_t actual_x, size_t actual_y)
 }
 
 
-void draw_map(t_map *map, Texture2D *textures, AppContext ctx)
+void draw_map(t_map *map, Texture2D *textures)
 {
 	Rectangle rec = texture_config(*map, 0, 0);
 
@@ -91,6 +91,25 @@ void draw_map(t_map *map, Texture2D *textures, AppContext ctx)
 	}
 }
 
+void draw_floor(t_map *map, Texture2D *textures)
+{
+	Rectangle rec = texture_config(*map, 0, 0);
+
+	for (size_t i = 0 ; map->map[i] ; i++)
+	{
+		for (size_t y = 0 ; map->map[i][y] ; y++)
+		{
+			Rectangle source = { 0, 0, (float)textures[0].width, (float)textures[0].height };
+			Rectangle dest = { rec.x, rec.y, map->t_x, map->t_y };
+			Vector2 origin = { 0, 0 };
+			DrawTexturePro(textures[0], source, dest, origin, 0.0f, WHITE);
+			rec.x += map->t_x;
+		}
+		rec.x = 0;
+		rec.y += map->t_y;
+	}
+}
+
 int main(void)
 {
 	t_map *map;
@@ -99,14 +118,15 @@ int main(void)
 	ctx = CreateAppContext();
 
 	InitApp(ctx);
-	init_map(&map, "maps/code.map");
+	map = init_map("maps/code.map");
 	prepare_map(map, ctx);
 	Texture2D *textures = load_texture(map);
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
 		ClearBackground(BLACK); // Important
-		draw_map(map, textures, *ctx);
+		draw_floor(map, textures);
+		draw_map(map, textures);
 		EndDrawing();
 	}
 	return 0;
