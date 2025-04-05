@@ -1280,6 +1280,7 @@ void LinkFilesNULL(const char *pattern, const char *outputBinary, const char *li
 	#define RAYLIB_SRC		RAYLIB_DIR"src/"
 	#define RAYLIB_BIN		RAYLIB_SRC"libraylib.a"
 	#define BUILD_RAYLIB_CMD	"cd " RAYLIB_SRC" && make PLATFORM=PLATFORM_DESKTOP"
+
 	#define	MACOS_FRAMEWORKS	"-framework CoreVideo		\
 								-framework CoreAudio		\
 								-framework Cocoa,			\
@@ -1299,6 +1300,12 @@ void LinkFilesNULL(const char *pattern, const char *outputBinary, const char *li
 	#define LDFLAGS		""MACOS_FRAMEWORKS
 	#define DEBUG_CFLAGS	"-fsanitize=address -g3"
 	#define DEBUG_LDGLAGS	""
+
+	#define MODULES_PATH		SRC_DIR"modules/"
+	
+	#define GRAPHICS_DIR		MODULES_PATH"graphics/"
+	#define GRAPHICS_BIN		GRAPHICS_DIR"libgraphics.dylib"
+	#define BUILD_GRAPHICS_CMD	"cd "GRAPHICS_DIR" && "CC" -I./src/extern/raylib-5.5/src/ -undefined dynamic_lookup *.c -dynamiclib -o libgraphics.dylib "LDFLAGS
 
 #elif defined(PLATFORM_LINUX)
 	#define EXECNAME	"lambdac"
@@ -1342,6 +1349,14 @@ void CleanRule(int argc, char **argv)
 	}
 }
 
+
+void BuildModules(int ac, char **av)
+{
+	ExecuteCommand(CreateCommand(BUILD_GRAPHICS_CMD));
+
+}
+
+
 void BuildRaylib(int argc, char **argv)
 {
 	if (!FileExists(RAYLIB_BIN))
@@ -1361,6 +1376,7 @@ void BuildRule(int argc, char **argv)
 		strcat(cflags, " -g3");
 	}
 	CompileFiles("src/*.c", "build", CC, cflags);
+	CompileFiles("src/chore/*.c", "build", CC, cflags);
 	LinkFiles("build/*.o", EXECNAME, LD, RAYLIB_BIN, cflags, ldflags);
 	if (HasArg(argc, argv, "no-obj"))
 		CB_RemoveDirectory("build");
@@ -1386,6 +1402,7 @@ int main(int argc, char **argv)
 
 	CreateRule("build",				BuildRule);
 	CreateRule("build-raylib",		BuildRaylib);
+	CreateRule("build-modules",		BuildModules);
 	CreateRule("exec",				ExecRule);
 	CreateRule("clean",				CleanRule);
 

@@ -1,15 +1,7 @@
-
-#include "raylib.h"
+#include "chore/chore.h"
+#include "codemon.h"
 #include <string.h>
 #include <stdlib.h>
-
-
-typedef struct AppContext
-{
-	int		windowHeight;
-	int		windowWidth;
-	char	windowName[256];
-} AppContext;
 
 
 AppContext	*CreateAppContext()
@@ -25,17 +17,19 @@ AppContext	*CreateAppContext()
 void	InitApp(AppContext *ctx)
 {
 	InitWindow(ctx->windowWidth, ctx->windowHeight, ctx->windowName);
+	HRAL_DeclareLibrary(&ctx->hrContext, "./src/modules/graphics/libgraphics.dylib", "cd ./src/modules/graphics/ && clang -I./src/extern/raylib-5.5/src/  *.c -dynamiclib -o libgraphics.dylib");
 }
 
 int main(void)
 {
 	AppContext *ctx = CreateAppContext();
 	InitApp(ctx);
+	void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
 	SetTargetFPS(60);
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
-		ClearBackground(RAYWHITE);
+		DrawMap(ctx);
 		EndDrawing();
 	}
 	CloseWindow();
