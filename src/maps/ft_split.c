@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 unsigned char	ft_isin_charset(char c, char *charset)
 {
@@ -73,6 +74,9 @@ char	**ft_split(char *str, char *charset)
 	size_t	totlen;
 	char	**strs;
 
+	if (!str)
+		return (NULL);
+	printf("SPLIT : %s\n", str);
 	totlen = count_words(str, charset);
 	strs = (char **)malloc(sizeof(char *) * (totlen + 1));
 	i = 0;

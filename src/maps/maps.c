@@ -1,9 +1,43 @@
-#include "raylib.h"
-#include "maps.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+#include "../codemon.h"
+
+void prepare_map(t_map *map, AppContext *ctx)
+{
+	map->t_x = ctx->windowWidth / map->width;
+	map->t_y = ctx->windowHeight / map->height;
+}
+
+Texture2D *load_texture(t_map *map)
+{
+	Texture2D *textures;
+	size_t i = 0;
+	char str[255];
+
+	while (map->stripe[i])
+		i++;
+	if (!(textures = (Texture2D *)malloc(sizeof(Texture2D) * (i + 1))))
+		return (NULL);
+	i = 0;
+	while (map->stripe[i])
+	{
+		strcpy(str, "./textures/");
+		strcat(str, map->stripe[i][1]);
+		textures[i++] = LoadTexture(str);
+	}
+	return textures;
+}
+
+Rectangle texture_config(t_map map, size_t actual_x, size_t actual_y)
+{
+	Rectangle rec;
+
+	rec.x = actual_x;
+	rec.y = actual_y;
+	rec.width = map.t_x;
+	rec.height = map.t_y;
+	return rec;
+}
+
+
 
 size_t map_size(FILE *file)
 {
@@ -27,7 +61,7 @@ void read_map(FILE *file, char *map)
 		return ;
 	while ((c = fgetc(file)) != EOF)
 		map[i++] = c;
-	map[i] = '\n';
+	map[i] = '\0'; // ✅ correction ici
 	fseek(file, 0, SEEK_SET);
 }
 
@@ -52,7 +86,7 @@ size_t map_striplen(char **splited)
 	size_t i = 0;
 	size_t y = 0;
 
-	while (strcmp(splited[i], "#END"))
+	while (splited[i] && strcmp(splited[i], "#END"))
 	{
 		if (!(splited[i][0] == '#' && splited[i][0] == '%'))
 			y++;
@@ -71,9 +105,9 @@ void stripe_parser(char *st_map, t_map *map)
 		i++;
 	if(!(map->stripe = (char ***)malloc(sizeof(char **) * (map_striplen(splited) + 1))))
 		return ;
-	while (strcmp(splited[i], "#END") != 0)
+	while (splited[i] && strcmp(splited[i], "#END") != 0)
 	{
-		if(splited[i][0] != '#' && splited[i][0] != '%')
+		if(splited[i][0] && splited[i][0] != '#' && splited[i][0] != '%')
 			map->stripe[y++] = ft_split(splited[i], " =");
 		i++;
 	}
@@ -90,7 +124,8 @@ void load_map(t_map *map)
 	while (!isdigit(splited[i][y]))
 		y++;
 	map->height = atoi((splited[i] + y));
-	while (strcmp(splited[i], "#END"))
+
+	while (splited[i] && strcmp(splited[i], "#END"))
 		i++;
 	i++;
 	y = 0;
@@ -98,6 +133,7 @@ void load_map(t_map *map)
 		return ;
 	while (splited[i])
 		map->map[y++] = strdup(splited[i++]);
+	map->map[y] = NULL;
 	ft_free_strsplit(splited);
 }
 
@@ -110,8 +146,8 @@ void init_map(t_map **imap, char *path)
 	*imap = map;
 	map->content = get_map(path);
 	stripe_parser(map->content, map);
-	map->width = strlen(map->map[0]);
-	load_map(map); 
+	load_map(map); // ✅ doit être ici avant d'accéder à map->map[0]
+	map->width = strlen(map->map[0]); // ✅ déplacé après
 }
 
 void print_param(t_map *map)
@@ -124,3 +160,5 @@ void print_param(t_map *map)
 		printf("%s = %s\n", map->map[i] ,map->map[i]);
 	printf("\n\nINFOS: Map format ascii\n\n");
 }
+
+

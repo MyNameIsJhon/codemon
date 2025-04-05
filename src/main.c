@@ -1,8 +1,8 @@
 #include "chore/chore.h"
 #include "codemon.h"
-#include "raylib.h"
-#include <string.h>
-#include <stdlib.h>
+#include "extern/raylib-5.5/src/raylib.h"
+#include <stdio.h>
+
 
 
 AppContext	*CreateAppContext()
@@ -15,6 +15,7 @@ AppContext	*CreateAppContext()
 	return (ctx);
 }
 
+
 void	InitApp(AppContext *ctx)
 {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -22,11 +23,21 @@ void	InitApp(AppContext *ctx)
 	ctx->player = CreatePlayer(ctx);
 	HRAL_DeclareLibrary(&ctx->hrContext, "./src/modules/graphics/libgraphics.dylib", " cd ./src/modules/graphics/ && clang -I./src/extern/raylib-5.5/src/ -undefined dynamic_lookup *.c -dynamiclib -o libgraphics.dylib ");
 	ctx->player = CreatePlayer(ctx);
+	ctx->map = malloc(sizeof(t_map));
+	init_map(&ctx->map, "./maps/code.map");
+	prepare_map(ctx->map, ctx); 
+	ctx->textures = load_texture(ctx->map);
 }
+
+
+
 
 int main(void)
 {
-	AppContext *ctx = CreateAppContext();
+	AppContext *ctx;
+	SetTargetFPS(100);
+	ctx = CreateAppContext();
+
 	InitApp(ctx);
 	SetTargetFPS(100);
 
@@ -61,7 +72,5 @@ int main(void)
 			lastReloadTime = currentTime;
 		}
 	}
-	CloseWindow();
-
 	return 0;
 }

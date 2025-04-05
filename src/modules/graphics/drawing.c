@@ -1,5 +1,32 @@
 #include "graphics.h"
 
+void DrawMap(AppContext *ctx)
+{
+	Texture2D *textures = ctx->textures;
+	t_map *map = ctx->map;
+	Rectangle rec = texture_config(*map, 0, 0);
+	Vector2 vec = {0, 0};
+
+	for (size_t i = 0 ; map->map[i] ; i++)
+	{
+		for (size_t y = 0 ; map->map[i][y] ; y++)
+		{
+			for (size_t z = 0 ; map->stripe[z] ; z++)
+			{
+				if (map->stripe[z][0][0] == map->map[i][y])
+				{
+					Rectangle source = { 0, 0, (float)textures[z].width, (float)textures[z].height };
+					Rectangle dest = { rec.x, rec.y, map->t_x, map->t_y };
+					Vector2 origin = { 0, 0 };
+					DrawTexturePro(textures[z], source, dest, origin, 0.0f, WHITE);
+				}
+			}
+			rec.x += map->t_x;
+		}
+		rec.x = 0;
+		rec.y += map->t_y;
+	}
+}
 
 void	DrawPlayer(AppContext *ctx)
 {
@@ -47,12 +74,6 @@ void DrawDialogBox(AppContext *ctx, Rectangle rec, const char* text, Color bgCol
 		letterCount = 0;
 		timeElapsed = 0.0;
 	}
-}
-
-
-void	DrawMap(AppContext *ctx)
-{
-	ClearBackground(WHITE);
 }
 
 void DrawGame(AppContext *ctx)
