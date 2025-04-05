@@ -1350,6 +1350,7 @@ void BuildRaylib(int argc, char **argv)
 
 void BuildRule(int argc, char **argv)
 {
+	BuildRaylib(argc, argv);
 	char cflags[512];
 	char ldflags[512];
 	strcpy(cflags, CFLAGS);
