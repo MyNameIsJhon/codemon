@@ -1,3 +1,4 @@
+#include "src/extern/raylib-5.5/src/raylib.h"
 #if 0
 OS="$(uname -s 2>/dev/null || echo Windows)"
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -1352,8 +1353,10 @@ void CleanRule(int argc, char **argv)
 
 void BuildModules(int ac, char **av)
 {
-	ExecuteCommand(CreateCommand(BUILD_GRAPHICS_CMD));
-
+	if (!FileExists(GRAPHICS_BIN) || HasArg(ac,av, "-force"))
+		ExecuteCommand(CreateCommand(BUILD_GRAPHICS_CMD));
+	else
+		LOG_INFO(COLOR_GREEN GRAPHICS_BIN " already exists!"COLOR_RESET);
 }
 
 
@@ -1365,6 +1368,7 @@ void BuildRaylib(int argc, char **argv)
 
 void BuildRule(int argc, char **argv)
 {
+	BuildModules(argc, argv);
 	BuildRaylib(argc, argv);
 	char cflags[512];
 	char ldflags[512];
