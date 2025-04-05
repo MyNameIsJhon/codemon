@@ -1,20 +1,6 @@
 #include "../../codemon.h"
 #include "../../extern//raylib-5.5/src/raylib.h"
 
-static Rectangle	GetStillSprite(Direction dir)
-{
-	switch (dir)
-	{
-		case UP:
-			return (Rectangle){ 16, 16, 16, 16 };
-		case DOWN:
-			return (Rectangle){ 16, 0, 16, 16 };
-		case RIGHT:
-			return (Rectangle){ 0, 16, 16, 16 };
-		case LEFT:
-			return (Rectangle){ 0, 0, 16, 16 };
-	}
-}
 
 void	DrawPlayer(AppContext *ctx)
 {
@@ -22,7 +8,7 @@ void	DrawPlayer(AppContext *ctx)
 	Rectangle dest = (Rectangle){ player->position.x, player->position.y, 35, 35 };
 	Rectangle src;
 	if (!player->isMoving)
-		src = GetStillSprite(player->dir);
+		src = player->frames[player->dir];
 	else
 		src = player->frames[((((int)(GetTime() * FPS) % 4)) * 4) + (player->dir)];
 	DrawTexturePro(
