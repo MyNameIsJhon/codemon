@@ -17,17 +17,18 @@ AppContext	*CreateAppContext()
 void	InitApp(AppContext *ctx)
 {
 	InitWindow(ctx->windowWidth, ctx->windowHeight, ctx->windowName);
-	HRAL_DeclareLibrary(&ctx->hrContext, "./src/modules/graphics/libgraphics.dylib", "cd ./src/modules/graphics/ && clang -I./src/extern/raylib-5.5/src/  *.c -dynamiclib -o libgraphics.dylib");
+	HRAL_DeclareLibrary(&ctx->hrContext, "./src/modules/graphics/libgraphics.dylib", " cd ./src/modules/graphics/ && clang -I./src/extern/raylib-5.5/src/ -undefined dynamic_lookup *.c -dynamiclib -o libgraphics.dylib ");
 }
 
 int main(void)
 {
 	AppContext *ctx = CreateAppContext();
 	InitApp(ctx);
-	void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
 	SetTargetFPS(60);
 	while (!WindowShouldClose())
 	{
+		HRAL_CheckForReload(&ctx->hrContext);
+		void (*DrawMap)(AppContext*) = HRAL_GetFunctionFromContext(&ctx->hrContext, "DrawMap");
 		BeginDrawing();
 		DrawMap(ctx);
 		EndDrawing();
