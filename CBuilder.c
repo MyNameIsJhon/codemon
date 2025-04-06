@@ -1379,6 +1379,7 @@ void BuildRule(int argc, char **argv)
 	CompileFiles("src/*.c", "build", CC, cflags);
 	CompileFiles("src/player/*.c", "build", CC, cflags);
 	CompileFiles("src/chore/*.c", "build", CC, cflags);
+	CompileFiles("src/maps/*.c", "build", CC, cflags);
 	LinkFiles("build/*.o", EXECNAME, LD, RAYLIB_BIN, cflags, ldflags);
 	if (HasArg(argc, argv, "no-obj"))
 		CB_RemoveDirectory("build");
