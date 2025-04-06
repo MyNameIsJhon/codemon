@@ -1,6 +1,6 @@
 # 🧠 Codemon — Learn C While Playing!
 
-![Alt text](https://assets.digitalocean.com/articles/alligator/boo.svg "a title")
+![Alt text](https://github.com/MyNameIsJhon/codemon/blob/main/codemon.png "a title")
 Welcome to **Codemon**, a game concept born during the _Hackston - Citizen of Wallonia_ hackathon.  
 This project is an **educational C-based game** designed to teach programming in a fun and engaging way — think _Pokémon_, but where battles are code challenges and exploration improves your coding skills.
 
