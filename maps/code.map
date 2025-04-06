@@ -8,6 +8,11 @@
 5 = tile_0109.png
 6 = tile_0464.png
 7 = tile_0460.png
+%PANNEAU
+s = tile_0167.png
+c = tile_0166.png
+v = tile_0191.png
+r = tile_0410.png
 %MOBILIER
 o = tile_0338.png
 b = tile_0327.png
@@ -22,12 +27,22 @@ t = tile_0422.png
 l = tile_0495.png
 %VERDURE:
 a = tile_0302.png
+%POOL
+m = tile_0224.png
+q = tile_0225.png
+g = tile_0226.png
+u = tile_0199.png
+i = tile_0172.png
+k = tile_0171.png
+y = tile_0170.png
+z = tile_0197.png
+h = tile_0198.png
 #END
-0000213000000
-0000213000000
-0000213l00000
-0000213t00000
-000l213000000
-000t213000000
+0000213r00000
+0000213v00000
+000c213l00000
+000s213t0yki0
+000l213c0zhu0
+000t213s0mqg0
 0000213000000
 0000674000000
