@@ -94,8 +94,9 @@ AppContext	*CreateAppContext()
 
 void	InitApp(AppContext *ctx)
 {
-	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	/* SetConfigFlags(FLAG_WINDOW_RESIZABLE); */
 	InitWindow(ctx->windowWidth, ctx->windowHeight, ctx->windowName);
+	/* ToggleFullscreen(); */
 	ctx->player = CreatePlayer(ctx);
 	ctx->arrowTexture = LoadTexture("./sprites/arrow.png");
 	CreatePlayerDirection(ctx);
