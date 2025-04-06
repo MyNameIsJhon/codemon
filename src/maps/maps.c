@@ -37,8 +37,6 @@ Rectangle texture_config(t_map map, size_t actual_x, size_t actual_y)
 	return rec;
 }
 
-
-
 size_t map_size(FILE *file)
 {
 	char c;
@@ -61,7 +59,7 @@ void read_map(FILE *file, char *map)
 		return ;
 	while ((c = fgetc(file)) != EOF)
 		map[i++] = c;
-	map[i] = '\0'; // ✅ correction ici
+	map[i] = '\0'; 
 	fseek(file, 0, SEEK_SET);
 }
 
@@ -146,8 +144,8 @@ void init_map(t_map **imap, char *path)
 	*imap = map;
 	map->content = get_map(path);
 	stripe_parser(map->content, map);
-	load_map(map); // ✅ doit être ici avant d'accéder à map->map[0]
-	map->width = strlen(map->map[0]); // ✅ déplacé après
+	load_map(map); 
+	map->width = strlen(map->map[0]); 
 }
 
 void print_param(t_map *map)
@@ -160,5 +158,3 @@ void print_param(t_map *map)
 		printf("%s = %s\n", map->map[i] ,map->map[i]);
 	printf("\n\nINFOS: Map format ascii\n\n");
 }
-
-
