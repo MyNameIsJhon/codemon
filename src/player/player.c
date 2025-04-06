@@ -14,7 +14,6 @@ Player	*CreatePlayer(AppContext *ctx)
 	return (player);
 }
 
-
 void	UpdatePlayer(AppContext *ctx)
 {
 	Player *player = ctx->player;

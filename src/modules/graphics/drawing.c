@@ -97,6 +97,86 @@ void DrawDialogBox(AppContext *ctx, Rectangle rec, const char* text, Color bgCol
 	}
 }
 
+
+void DrawPlayerDirections(AppContext *ctx, float centerX, float centerY)
+{;
+    const float ARROW_OFFSET = 60;
+    const float ARROW_SIZE = 50;
+    
+    const struct {
+        float xOffset;
+        float yOffset;
+        float rotation;
+    } arrowPositions[] = {
+        {-ARROW_OFFSET, 0, -90.0f},
+        {0, -ARROW_OFFSET, 0.0f},
+        {ARROW_OFFSET, 0, 90.0f},
+        {0, ARROW_OFFSET, 180.0f}
+    };
+    
+    for (int i = 0; i < 4; i++) {
+        float x = centerX + arrowPositions[i].xOffset;
+        float y = centerY + arrowPositions[i].yOffset;
+        
+        DrawTexturePro(
+            ctx->playerDirections[i].texture,
+            (Rectangle){ 0, 0, 32, 32 },
+            (Rectangle){ x, y, ARROW_SIZE, ARROW_SIZE },
+            (Vector2){ ARROW_SIZE/2, 0 },
+            0.0,
+			WHITE
+        );
+		Color color = { 0, 0, 0, 0 };
+		if (ctx->playerDirections[i].selected)
+			color = (Color){ 0, 0, 0, 40 };
+		DrawRectanglePro(
+			(Rectangle){ x, y, ARROW_SIZE, ARROW_SIZE },
+			(Vector2){ ARROW_SIZE/2, 0 },
+			0.0,
+			color
+		);
+	}
+}
+
+void DrawArrows(AppContext* ctx, float centerX, float centerY) {
+    const float ARROW_SIZE = 50;
+    const float ARROW_OFFSET = 60;
+    
+    const struct {
+        float xOffset;
+        float yOffset;
+        float rotation;
+    } arrowPositions[] = {
+        {-ARROW_OFFSET, 0, -90.0f},
+        {0, -ARROW_OFFSET, 0.0f},
+        {ARROW_OFFSET, 0, 90.0f},
+        {0, ARROW_OFFSET, 180.0f}
+    };
+    
+    for (int i = 0; i < 4; i++) {
+        float x = centerX + arrowPositions[i].xOffset;
+        float y = centerY + arrowPositions[i].yOffset;
+        
+        DrawTexturePro(
+            ctx->arrowTexture,
+            (Rectangle){ 0, 0, 1280, 1280 },
+            (Rectangle){ x, y, ARROW_SIZE, ARROW_SIZE },
+            (Vector2){ ARROW_SIZE/2, 0 },
+            arrowPositions[i].rotation,
+			WHITE
+        );
+		Color color = { 0, 0, 0, 0 };
+		if (ctx->arrows[i].selected)
+			color = (Color){ 0, 0, 0, 40 };
+		DrawRectanglePro(
+			(Rectangle){ x, y, ARROW_SIZE, ARROW_SIZE },
+			(Vector2){ ARROW_SIZE/2, 0 },
+			arrowPositions[i].rotation,
+			color
+		);
+    }
+}
+
 void DrawGame(AppContext *ctx)
 {
 	BeginDrawing();
@@ -104,6 +184,8 @@ void DrawGame(AppContext *ctx)
 	DrawMap(ctx);
 	DrawDialogBox(ctx, (Rectangle){.x = 0, .y = 0, .width = 500, .height = 500}, "Codemon\nProduit par :\n- Pierre\n- Lala\n- Po", LIGHTGRAY, BLACK);
 	DrawPlayer(ctx);
+	DrawArrows(ctx, 100, ctx->windowHeight - 100);
+	DrawPlayerDirections(ctx, ctx->windowWidth - 150, ctx->windowHeight - 150);
 	DrawConsole(ctx);
 	EndDrawing();
 }

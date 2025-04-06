@@ -43,6 +43,23 @@ typedef struct Player
 	Rectangle frames[16];
 }	Player;
 
+typedef struct Arrow
+{
+	bool selected;
+	Direction dir;
+	float rotation;
+	Rectangle hitbox;
+}	Arrow;
+
+typedef struct PlayerDirection
+{
+	bool selected;
+	Direction dir;
+	float rotation;
+	Rectangle hitbox;
+	Texture2D texture;
+}	PlayerDirection;
+
 typedef struct AppContext
 {
 	int				windowHeight;
@@ -52,6 +69,9 @@ typedef struct AppContext
 	Player			*player;
 	t_map			*map;
 	Texture2D		*textures;
+	Arrow			arrows[4];
+	Texture2D		arrowTexture;
+	PlayerDirection	playerDirections[4];
 } AppContext;
 
 Player	*CreatePlayer(AppContext *ctx);
