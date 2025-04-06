@@ -1,7 +1,8 @@
 # 🧠 Codemon — Learn C While Playing!
 
-Welcome to **Codemon**, a game concept born during the *Hackston - Citizen of Wallonia* hackathon.  
-This project is an **educational C-based game** designed to teach programming in a fun and engaging way — think *Pokémon*, but where battles are code challenges and exploration improves your coding skills.
+![Alt text](https://assets.digitalocean.com/articles/alligator/boo.svg "a title")
+Welcome to **Codemon**, a game concept born during the _Hackston - Citizen of Wallonia_ hackathon.  
+This project is an **educational C-based game** designed to teach programming in a fun and engaging way — think _Pokémon_, but where battles are code challenges and exploration improves your coding skills.
 
 > ⚠️ **Project in early development stage.** Currently, you can move your character around — collision detection and game objectives are coming soon!
 
@@ -34,3 +35,4 @@ Codemon uses a lightweight custom build system called `cBuilder`, compatible wit
 ```bash
 ./cBuilder.c      # Compile the build system
 ./cBuilder exec   # Build and launch the game
+```
