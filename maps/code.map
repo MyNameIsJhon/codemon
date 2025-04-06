@@ -1,4 +1,13 @@
 #START-8
+% ROUTE ET SOLE
+0 = tile_0028.png
+1 = tile_0462.png
+2 = tile_0461.png
+3 = tile_0463.png
+4 = tile_0465.png
+5 = tile_0109.png
+6 = tile_0464.png
+7 = tile_0460.png
 %MOBILIER
 o = tile_0338.png
 b = tile_0327.png
@@ -8,17 +17,17 @@ p = tile_0279.png
 %PNJ:
 f = tile_0105.png
 h = tile_0053.png
+%VOITURE
+t = tile_0422.png
+l = tile_0495.png
 %VERDURE:
 a = tile_0302.png
-%SOL ET MURE:
-0 = tile_0109.png
-1 = tile_0109.png
 #END
-1111111111111
-1o00000000001
-1000b0000p001
-1f00000000001
-1n0000h000001
-1000000000e01
-1a00000110001
-1111111111111
+0000213000000
+0000213000000
+0000213l00000
+0000213t00000
+0000213000000
+0000213000000
+0000213000000
+0000674000000
