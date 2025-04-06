@@ -35,4 +35,12 @@ void	UpdatePlayer(AppContext *ctx)
 			player->position.x -= 2;
 			break ;
 	}
+	if (player->position.x + PLAYER_SPRITE_LENGTH> ctx->windowWidth)
+		player->position.x = ctx->windowWidth - PLAYER_SPRITE_LENGTH;
+	else if (player->position.x < 0)
+		player->position.x = 0;
+	else if (player->position.y < 0)
+		player->position.y = 0;
+	else if (player->position.y + PLAYER_SPRITE_LENGTH > ctx->windowHeight)
+		player->position.y = ctx->windowHeight - PLAYER_SPRITE_LENGTH;
 }
